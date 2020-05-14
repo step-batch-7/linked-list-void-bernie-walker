@@ -5,6 +5,8 @@
 
 typedef Element (*Genearator)(int);
 
+Element generate_even(int);
+
 Element generate_int(int);
 
 Element generate_square(int);
@@ -14,6 +16,8 @@ Element get_square_of(Element);
 List_ptr get_default_list(int, Genearator);
 
 void square_int(Element);
+
+Status is_even(Element);
 
 Status are_ints_equal(Element, Element);
 

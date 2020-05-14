@@ -1,5 +1,20 @@
 #include "aider.h"
 
+Element generate_even(int value)
+{
+  int *even = malloc(sizeof(int));
+  int index = 0;
+  *even = 0;
+
+  while (index != value)
+  {
+    *even += 2;
+    ++index;
+  }
+
+  return (Element)even;
+}
+
 Element generate_int(int value)
 {
   Element int_value = malloc(sizeof(int));
@@ -34,6 +49,11 @@ List_ptr get_default_list(int size, Genearator value_generator)
 void square_int(Element num)
 {
   *(int *)num = *(int *)num * *(int *)num;
+}
+
+Status is_even(Element num)
+{
+  return ((*(int *)num & 1) == 0);
 }
 
 Status are_ints_equal(Element int1, Element int2)
