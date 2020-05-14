@@ -32,9 +32,11 @@ Status is_list_empty(List_ptr list)
 void test_clear_list(void)
 {
   List_ptr list = get_default_list(3, generate_int);
+  forEach(list, free);
   assert_strict_equal("Should clear the list", clear_list(list), Success);
   assert_strict_equal("The count should be 0 after clearing the list", list->length, 0);
   assert_strict_equal("Both head and last should be NULL after clearing the list", is_list_empty(list), 1);
+  destroy_list(list, free);
 }
 
 void test_forEach(void)
@@ -56,7 +58,8 @@ void test_reverse(void)
   Status is_reversed = ((reversed2->length == 2) && (*(int *)reversed2->first->element == 1) && (*(int *)reversed2->last->element == 0));
   assert_strict_equal("should reverse the given array", is_reversed, Success);
 
-  List_ptr lists[] = {list1, list2, reversed1};
+  clear_list(reversed2);
+  List_ptr lists[] = {list1, list2, reversed1, reversed2};
   destroy_multiple(3, lists, free);
 }
 
