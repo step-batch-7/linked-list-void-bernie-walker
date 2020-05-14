@@ -7,7 +7,7 @@ typedef Element (*Genearator)(int);
 
 Element generate_int(int);
 
-List_ptr get_default_list(int size);
+List_ptr get_default_list(int, Genearator);
 
 void destroy_multiple(int, List_ptr[], ElementProcessor);
 #endif // !__AIDER_H_

@@ -7,13 +7,13 @@ Element generate_int(int value)
   return int_value;
 }
 
-List_ptr get_default_list(int size)
+List_ptr get_default_list(int size, Genearator value_generator)
 {
   List_ptr list = create_list();
 
   for (size_t i = 0; i < size; i++)
   {
-    add_to_list(list, generate_int(i));
+    add_to_list(list, value_generator(i));
   }
 
   return list;

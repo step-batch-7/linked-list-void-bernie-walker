@@ -10,7 +10,7 @@ Status is_list_empty(List_ptr list)
 
 void test_clear_list(void)
 {
-  List_ptr list = get_default_list(3);
+  List_ptr list = get_default_list(3, generate_int);
   assert_strict_equal("Should clear the list", clear_list(list), Success);
   assert_strict_equal("The count should be 0 after clearing the list", list->length, 0);
   assert_strict_equal("Both head and last should be NULL after clearing the list", is_list_empty(list), 1);
@@ -22,7 +22,7 @@ void test_reverse(void)
   List_ptr reversed1 = reverse(list1);
   assert_strict_equal("should reverse an empty list", reversed1->length, 0);
 
-  List_ptr list2 = get_default_list(2);
+  List_ptr list2 = get_default_list(2, generate_int);
   List_ptr reversed2 = reverse(list2);
   Status is_reversed = ((reversed2->length == 2) && (*(int *)reversed2->first->element == 1) && (*(int *)reversed2->last->element == 0));
   assert_strict_equal("should reverse the given array", is_reversed, Success);
