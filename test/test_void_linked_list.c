@@ -39,6 +39,25 @@ void test_clear_list(void)
   destroy_list(list, free);
 }
 
+void test_add_unique(void)
+{
+  List_ptr list = create_list();
+  int *num = malloc(sizeof(int));
+  *num = 7;
+
+  assert_strict_equal("should add any element to an empty list", add_unique(list, num, are_ints_equal), Success);
+
+  num = malloc(sizeof(int));
+  *num = 5;
+  assert_strict_equal("should add a unique item to the list", add_unique(list, num, are_ints_equal), Success);
+  assert_strict_equal("the length of the list should be updated", list->length, 2);
+  assert_strict_equal("should add item at the end of the list", *(int *)list->last->element, 5);
+
+  assert_strict_equal("Should not add a non unique item to the list", add_unique(list, num, are_ints_equal), Failure);
+
+  destroy_list(list, free);
+}
+
 void test_remove_from_end(void)
 {
   List_ptr list = get_default_list(2, generate_int);
@@ -240,6 +259,9 @@ void test_find_element(void)
   clear_list(list);
   pair = find_element(list, num, are_ints_equal);
   assert_strict_equal("should return NULL when list is empty ", (pair == NULL), Success);
+
+  free(num);
+  destroy_list(list, free);
 }
 
 void test_create_list(void)
@@ -266,6 +288,7 @@ int main(void)
   exec_test_suite("remove_from_start", test_remove_from_start);
   exec_test_suite("remove_at", test_remove_at);
   exec_test_suite("remove_from_end", test_remove_from_end);
+  exec_test_suite("add_unique", test_add_unique);
   exec_test_suite("clear_list", test_clear_list);
   print_report();
   return 0;
