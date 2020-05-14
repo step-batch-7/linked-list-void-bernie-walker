@@ -14,6 +14,11 @@ Element generate_square(int value)
   return int_value;
 }
 
+Element get_square_of(Element num)
+{
+  return generate_square(*(int *)num);
+}
+
 List_ptr get_default_list(int size, Genearator value_generator)
 {
   List_ptr list = create_list();

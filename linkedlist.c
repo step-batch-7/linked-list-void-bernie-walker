@@ -124,6 +124,20 @@ List_ptr reverse(List_ptr list)
   return reversed;
 }
 
+List_ptr map(List_ptr list, Mapper mapper)
+{
+  List_ptr result = create_list();
+  Node_ptr walker = list->first;
+
+  while (walker != NULL)
+  {
+    add_to_list(result, mapper(walker->element));
+    walker = walker->next;
+  }
+
+  return result;
+}
+
 void forEach(List_ptr list, ElementProcessor process_element)
 {
   Node_ptr walker = list->first;
