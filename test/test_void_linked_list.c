@@ -1,26 +1,21 @@
 #include <stdio.h>
 #include "test.h"
 #include "../linkedlist.h"
+#include "../aider.h"
 
 void test_reverse(void)
 {
-  List_ptr list = create_list();
-  List_ptr reversed = reverse(list);
-  assert_strict_equal("should reverse an empty list", reversed->length, 0);
-  destroy_list(reversed, free);
+  List_ptr list1 = create_list();
+  List_ptr reversed1 = reverse(list1);
+  assert_strict_equal("should reverse an empty list", reversed1->length, 0);
 
-  int *num;
-  for (size_t i = 0; i < 2; i++)
-  {
-    num = malloc(sizeof(int));
-    *num = i;
-    add_to_list(list, num);
-  }
-
-  reversed = reverse(list);
-  Status is_reversed = ((reversed->length == 2) && (*(int *)reversed->first->element == 1) && (*(int *)reversed->last->element == 0));
-
+  List_ptr list2 = get_default_list(2);
+  List_ptr reversed2 = reverse(list2);
+  Status is_reversed = ((reversed2->length == 2) && (*(int *)reversed2->first->element == 1) && (*(int *)reversed2->last->element == 0));
   assert_strict_equal("should reverse the given array", is_reversed, Success);
+
+  List_ptr lists[] = {list1, list2, reversed1};
+  destroy_multiple(3, lists, free);
 }
 
 void test_insert_at(void)
