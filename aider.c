@@ -19,6 +19,11 @@ List_ptr get_default_list(int size, Genearator value_generator)
   return list;
 }
 
+Status are_ints_equal(Element int1, Element int2)
+{
+  return *(int *)int1 == *(int *)int2;
+}
+
 void destroy_multiple(int size, List_ptr lists[size], ElementProcessor element_destroyer)
 {
   for (size_t i = 0; i < size; i++)

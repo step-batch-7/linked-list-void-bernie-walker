@@ -3,6 +3,25 @@
 #include "../linkedlist.h"
 #include "../aider.h"
 
+Status are_lists_equal(List_ptr list1, List_ptr list2, Matcher are_elements_equal)
+{
+  if (list1->length != list2->length)
+  {
+    return Failure;
+  }
+
+  Node_ptr walker1 = list1->first, walker2 = list2->first;
+  while ((walker1 != NULL) && (walker2 != NULL))
+  {
+    if (!are_elements_equal(walker1->element, walker2->element))
+    {
+      return Failure;
+    }
+  }
+
+  return Success;
+}
+
 Status is_list_empty(List_ptr list)
 {
   return ((list->first == NULL) && (list->last == NULL)) ? Success : Failure;
