@@ -134,6 +134,28 @@ void forEach(List_ptr list, ElementProcessor process_element)
   }
 }
 
+Element remove_from_start(List_ptr list)
+{
+  if (list->first == NULL)
+  {
+    return NULL;
+  }
+
+  Node_ptr node_to_remove = list->first;
+  list->first = node_to_remove->next;
+  Element removed_element = node_to_remove->element;
+
+  free(node_to_remove);
+  --list->length;
+
+  if (list->first == NULL)
+  {
+    list->last = NULL;
+  }
+
+  return removed_element;
+}
+
 Status clear_list(List_ptr list)
 {
   Node_ptr walker = list->first;

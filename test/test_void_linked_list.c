@@ -39,6 +39,23 @@ void test_clear_list(void)
   destroy_list(list, free);
 }
 
+void test_remove_from_start(void)
+{
+  List_ptr list = get_default_list(2, generate_int);
+  int *removed = remove_from_start(list);
+
+  assert_strict_equal("Should remove from the start of a non empty list", *removed, 0);
+  free(removed);
+  assert_strict_equal("Should update the head of the list", *(int *)list->first->element, 1);
+  assert_strict_equal("Should updated the count of the list", list->length, 1);
+
+  remove_from_start(list);
+  assert_strict_equal("Both head and last should be NULL after removal of an only element", is_list_empty(list), Success);
+
+  assert_strict_equal("Should not remove from an empty list", (remove_from_start(list) == NULL), Success);
+  destroy_list(list, free);
+}
+
 void test_forEach(void)
 {
   List_ptr actual = get_default_list(3, generate_int);
@@ -132,6 +149,7 @@ int main(void)
   exec_test_suite("insert_at", test_insert_at);
   exec_test_suite("reverse", test_reverse);
   exec_test_suite("forEach", test_forEach);
+  exec_test_suite("remove_from_start", test_remove_from_start);
   exec_test_suite("clear_list", test_clear_list);
   print_report();
   return 0;
