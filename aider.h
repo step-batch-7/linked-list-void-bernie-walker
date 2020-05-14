@@ -21,6 +21,8 @@ Status is_even(Element);
 
 Status are_ints_equal(Element, Element);
 
+Element add_two_ints(Element, Element);
+
 void destroy_multiple(int, List_ptr[], ElementProcessor);
 
 #endif // !__AIDER_H_
