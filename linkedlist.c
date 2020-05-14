@@ -110,6 +110,20 @@ Status insert_at(List_ptr list, Element element, int position)
   return Success;
 }
 
+List_ptr reverse(List_ptr list)
+{
+  List_ptr reversed = create_list();
+  Node_ptr walker = list->first;
+
+  while (walker != NULL)
+  {
+    add_to_start(reversed, walker->element);
+    walker = walker->next;
+  }
+
+  return reversed;
+}
+
 void destroy_list(List_ptr list, ElementProcessor element_destroyer)
 {
   Node_ptr walker = list->first;

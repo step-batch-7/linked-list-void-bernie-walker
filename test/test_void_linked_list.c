@@ -2,6 +2,27 @@
 #include "test.h"
 #include "../linkedlist.h"
 
+void test_reverse(void)
+{
+  List_ptr list = create_list();
+  List_ptr reversed = reverse(list);
+  assert_strict_equal("should reverse an empty list", reversed->length, 0);
+  destroy_list(reversed, free);
+
+  int *num;
+  for (size_t i = 0; i < 2; i++)
+  {
+    num = malloc(sizeof(int));
+    *num = i;
+    add_to_list(list, num);
+  }
+
+  reversed = reverse(list);
+  Status is_reversed = ((reversed->length == 2) && (*(int *)reversed->first->element == 1) && (*(int *)reversed->last->element == 0));
+
+  assert_strict_equal("should reverse the given array", is_reversed, Success);
+}
+
 void test_insert_at(void)
 {
   int *num1 = malloc(sizeof(int));
@@ -69,6 +90,7 @@ int main(void)
   exec_test_suite("add_to_start", test_add_to_start);
   exec_test_suite("add_to_list", test_add_to_list);
   exec_test_suite("insert_at", test_insert_at);
+  exec_test_suite("reverse", test_reverse);
   print_report();
   return 0;
 }
