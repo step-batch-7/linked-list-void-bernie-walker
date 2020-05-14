@@ -42,6 +42,27 @@ Node_ptr get_nth_node(List_ptr list, int n)
   return walker;
 }
 
+Pair_ptr find_element(List_ptr list, Element element, Matcher matcher)
+{
+  Pair_ptr pair = malloc(sizeof(PrevCurrentPair));
+  Node_ptr walker = list->first;
+
+  while (walker != NULL)
+  {
+    pair->previous = pair->current;
+    pair->current = walker;
+
+    if (matcher(element, walker->element))
+    {
+      return pair;
+    }
+
+    walker = walker->next;
+  }
+
+  return NULL;
+}
+
 Status add_to_start(List_ptr list, Element element)
 {
   Node_ptr new_node = create_node(element);

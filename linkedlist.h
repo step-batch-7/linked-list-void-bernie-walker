@@ -51,6 +51,7 @@ typedef Status (*Matcher)(Element, Element);
 Node_ptr create_node(Element);
 List_ptr create_list(void);
 Node_ptr get_nth_node(List_ptr, int);
+Pair_ptr find_element(List_ptr, Element, Matcher);
 
 Status add_to_start(List_ptr, Element);
 Status add_to_list(List_ptr, Element);

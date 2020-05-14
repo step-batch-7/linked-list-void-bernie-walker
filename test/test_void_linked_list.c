@@ -221,6 +221,27 @@ void test_add_to_start(void)
   destroy_list(list, free);
 }
 
+void test_find_element(void)
+{
+  List_ptr list = get_default_list(3, generate_int);
+
+  int *num = malloc(sizeof(int));
+  *num = 9;
+  Pair_ptr pair = find_element(list, num, are_ints_equal);
+  assert_strict_equal("should return NULL when element is not present", (pair == NULL), Success);
+
+  *num = 1;
+  pair = find_element(list, num, are_ints_equal);
+  Status is_valid_pair = ((*(int *)pair->current->element == 1) && (*(int *)pair->previous->element == 0));
+  assert_strict_equal("should return current previous pair when element is found", is_valid_pair, Success);
+  free(pair);
+
+  forEach(list, free);
+  clear_list(list);
+  pair = find_element(list, num, are_ints_equal);
+  assert_strict_equal("should return NULL when list is empty ", (pair == NULL), Success);
+}
+
 void test_create_list(void)
 {
   List_ptr list = create_list();
@@ -233,6 +254,7 @@ void test_create_list(void)
 int main(void)
 {
   exec_test_suite("create_list", test_create_list);
+  exec_test_suite("find_element", test_find_element);
   exec_test_suite("add_to_start", test_add_to_start);
   exec_test_suite("add_to_list", test_add_to_list);
   exec_test_suite("insert_at", test_insert_at);
