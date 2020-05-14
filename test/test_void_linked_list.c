@@ -105,6 +105,23 @@ void test_forEach(void)
   assert_strict_equal("should square the elements of the array", are_lists_equal(actual, expected, are_ints_equal), Success);
 }
 
+void test_filter(void)
+{
+  List_ptr list = get_default_list(5, generate_int);
+  List_ptr expected = get_default_list(3, generate_even);
+  List_ptr actual = filter(list, is_even);
+
+  Status do_arrays_match = are_lists_equal(actual, expected, are_ints_equal);
+  assert_strict_equal("should filter only the even numbers in the list", do_arrays_match, Success);
+
+  clear_list(list);
+  List_ptr empty_list = filter(list, is_even);
+  assert_strict_equal("should filter an empty array", is_list_empty(empty_list), Success);
+
+  List_ptr lists[4] = {list, expected, actual, empty_list};
+  destroy_multiple(4, lists, free);
+}
+
 void test_map(void)
 {
   List_ptr list = get_default_list(3, generate_int);
@@ -207,6 +224,7 @@ int main(void)
   exec_test_suite("insert_at", test_insert_at);
   exec_test_suite("reverse", test_reverse);
   exec_test_suite("map", test_map);
+  exec_test_suite("filter", test_filter);
   exec_test_suite("forEach", test_forEach);
   exec_test_suite("remove_from_start", test_remove_from_start);
   exec_test_suite("remove_at", test_remove_at);

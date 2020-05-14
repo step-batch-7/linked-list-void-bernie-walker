@@ -138,6 +138,23 @@ List_ptr map(List_ptr list, Mapper mapper)
   return result;
 }
 
+List_ptr filter(List_ptr list, Predicate predicate)
+{
+  List_ptr result = create_list();
+  Node_ptr walker = list->first;
+
+  while (walker != NULL)
+  {
+    if (predicate(walker->element))
+    {
+      add_to_list(result, walker->element);
+    }
+    walker = walker->next;
+  }
+
+  return result;
+}
+
 void forEach(List_ptr list, ElementProcessor process_element)
 {
   Node_ptr walker = list->first;
