@@ -7,7 +7,11 @@ typedef Element (*Genearator)(int);
 
 Element generate_int(int);
 
+Element generate_square(int);
+
 List_ptr get_default_list(int, Genearator);
+
+void square_int(Element);
 
 Status are_ints_equal(Element, Element);
 

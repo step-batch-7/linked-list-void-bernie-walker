@@ -124,6 +124,16 @@ List_ptr reverse(List_ptr list)
   return reversed;
 }
 
+void forEach(List_ptr list, ElementProcessor process_element)
+{
+  Node_ptr walker = list->first;
+  while (walker != NULL)
+  {
+    process_element(walker->element);
+    walker = walker->next;
+  }
+}
+
 Status clear_list(List_ptr list)
 {
   Node_ptr walker = list->first;

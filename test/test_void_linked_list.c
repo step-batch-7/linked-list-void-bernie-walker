@@ -17,6 +17,8 @@ Status are_lists_equal(List_ptr list1, List_ptr list2, Matcher are_elements_equa
     {
       return Failure;
     }
+    walker1 = walker1->next;
+    walker2 = walker2->next;
   }
 
   return Success;
@@ -33,6 +35,14 @@ void test_clear_list(void)
   assert_strict_equal("Should clear the list", clear_list(list), Success);
   assert_strict_equal("The count should be 0 after clearing the list", list->length, 0);
   assert_strict_equal("Both head and last should be NULL after clearing the list", is_list_empty(list), 1);
+}
+
+void test_forEach(void)
+{
+  List_ptr actual = get_default_list(3, generate_int);
+  List_ptr expected = get_default_list(3, generate_square);
+  forEach(actual, square_int);
+  assert_strict_equal("should square the elements of the array", are_lists_equal(actual, expected, are_ints_equal), Success);
 }
 
 void test_reverse(void)
@@ -118,6 +128,7 @@ int main(void)
   exec_test_suite("add_to_list", test_add_to_list);
   exec_test_suite("insert_at", test_insert_at);
   exec_test_suite("reverse", test_reverse);
+  exec_test_suite("forEach", test_forEach);
   exec_test_suite("clear_list", test_clear_list);
   print_report();
   return 0;

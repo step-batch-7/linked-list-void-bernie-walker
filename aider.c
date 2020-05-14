@@ -7,6 +7,13 @@ Element generate_int(int value)
   return int_value;
 }
 
+Element generate_square(int value)
+{
+  Element int_value = malloc(sizeof(int));
+  *(int *)int_value = value * value;
+  return int_value;
+}
+
 List_ptr get_default_list(int size, Genearator value_generator)
 {
   List_ptr list = create_list();
@@ -17,6 +24,11 @@ List_ptr get_default_list(int size, Genearator value_generator)
   }
 
   return list;
+}
+
+void square_int(Element num)
+{
+  *(int *)num = *(int *)num * *(int *)num;
 }
 
 Status are_ints_equal(Element int1, Element int2)
