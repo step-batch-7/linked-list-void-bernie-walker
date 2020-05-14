@@ -185,6 +185,11 @@ Element remove_at(List_ptr list, int position)
   return removed_element;
 }
 
+Element remove_from_end(List_ptr list)
+{
+  return remove_at(list, list->length - 1);
+}
+
 Status clear_list(List_ptr list)
 {
   Node_ptr walker = list->first;
