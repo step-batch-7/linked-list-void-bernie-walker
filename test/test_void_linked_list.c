@@ -42,26 +42,38 @@ void test_clear_list(void)
 void test_remove_at(void)
 {
   List_ptr list = get_default_list(3, generate_int);
-  assert_strict_equal("Should remove from middle of the list", *(int *)remove_at(list, 1), 1);
+
+  int *removed = remove_at(list, 1);
+  assert_strict_equal("Should remove from middle of the list", *removed, 1);
   assert_strict_equal("Should update the length of the list", list->length, 2);
-  assert_strict_equal("Should remove from the end of the list", *(int *)remove_at(list, 1), 2);
-  assert_strict_equal("Should remove from starting of the list", *(int *)remove_at(list, 0), 0);
+  free(removed);
+
+  removed = remove_at(list, 1);
+  assert_strict_equal("Should remove from the end of the list", *removed, 2);
+  free(removed);
+
+  removed = remove_at(list, 0);
+  assert_strict_equal("Should remove from starting of the list", *removed, 0);
   assert_strict_equal("Both head and last should be NULL after removal of an only element", is_list_empty(list), Success);
+  free(removed);
+
   assert_strict_equal("Should not remove from the list when a wrong position is given", (remove_at(list, 2) == NULL), Success);
+  destroy_list(list, free);
 }
 
 void test_remove_from_start(void)
 {
   List_ptr list = get_default_list(2, generate_int);
-  int *removed = remove_from_start(list);
 
+  int *removed = remove_from_start(list);
   assert_strict_equal("Should remove from the start of a non empty list", *removed, 0);
-  free(removed);
   assert_strict_equal("Should update the head of the list", *(int *)list->first->element, 1);
   assert_strict_equal("Should updated the count of the list", list->length, 1);
+  free(removed);
 
-  remove_from_start(list);
-  assert_strict_equal("Both head and last should be NULL after removal of an only element", is_list_empty(list), Success);
+  removed = remove_from_start(list);
+  assert_strict_equal("Both first and last should be NULL after removal of an only element", is_list_empty(list), Success);
+  free(removed);
 
   assert_strict_equal("Should not remove from an empty list", (remove_from_start(list) == NULL), Success);
   destroy_list(list, free);
