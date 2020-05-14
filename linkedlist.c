@@ -124,6 +124,23 @@ List_ptr reverse(List_ptr list)
   return reversed;
 }
 
+Status clear_list(List_ptr list)
+{
+  Node_ptr walker = list->first;
+
+  while (walker != NULL)
+  {
+    Node_ptr temp = walker->next;
+    free(walker);
+    walker = temp;
+  }
+
+  list->first = NULL;
+  list->last = NULL;
+  list->length = 0;
+  return Success;
+}
+
 void destroy_list(List_ptr list, ElementProcessor element_destroyer)
 {
   Node_ptr walker = list->first;

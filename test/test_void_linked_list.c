@@ -3,6 +3,19 @@
 #include "../linkedlist.h"
 #include "../aider.h"
 
+Status is_list_empty(List_ptr list)
+{
+  return ((list->first == NULL) && (list->last == NULL)) ? Success : Failure;
+}
+
+void test_clear_list(void)
+{
+  List_ptr list = get_default_list(3);
+  assert_strict_equal("Should clear the list", clear_list(list), Success);
+  assert_strict_equal("The count should be 0 after clearing the list", list->length, 0);
+  assert_strict_equal("Both head and last should be NULL after clearing the list", is_list_empty(list), 1);
+}
+
 void test_reverse(void)
 {
   List_ptr list1 = create_list();
@@ -86,6 +99,7 @@ int main(void)
   exec_test_suite("add_to_list", test_add_to_list);
   exec_test_suite("insert_at", test_insert_at);
   exec_test_suite("reverse", test_reverse);
+  exec_test_suite("clear_list", test_clear_list);
   print_report();
   return 0;
 }
