@@ -255,6 +255,18 @@ Element remove_from_end(List_ptr list)
   return remove_at(list, list->length - 1);
 }
 
+Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
+{
+  Pair_ptr pair = find_element(list, element, matcher);
+
+  if (pair == NULL)
+  {
+    return NULL;
+  }
+
+  return NULL;
+}
+
 Status add_unique(List_ptr list, Element element, Matcher matcher)
 {
   Pair_ptr pair = find_element(list, element, matcher);

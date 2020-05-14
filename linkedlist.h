@@ -68,7 +68,7 @@ Element remove_from_start(List_ptr); // Returns Element which was removed
 Element remove_at(List_ptr, int);
 Element remove_from_end(List_ptr);
 
-Element remove_first_occurrence(List_ptr, Element element, Matcher matcher);
+Element remove_first_occurrence(List_ptr, Element, Matcher);
 List_ptr remove_all_occurrences(List_ptr, Element element, Matcher matcher); // Returns List of removed elements
 
 Status add_unique(List_ptr list, Element element, Matcher matcher);

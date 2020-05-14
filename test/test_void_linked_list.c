@@ -34,7 +34,7 @@ void test_clear_list(void)
   List_ptr list = get_default_list(3, generate_int);
   forEach(list, free);
   assert_strict_equal("Should clear the list", clear_list(list), Success);
-  assert_strict_equal("The count should be 0 after clearing the list", list->length, 0);
+  assert_strict_equal("The length should be 0 after clearing the list", list->length, 0);
   assert_strict_equal("Both head and last should be NULL after clearing the list", is_list_empty(list), 1);
   destroy_list(list, free);
 }
@@ -56,6 +56,19 @@ void test_add_unique(void)
   assert_strict_equal("Should not add a non unique item to the list", add_unique(list, num, are_ints_equal), Failure);
 
   destroy_list(list, free);
+}
+
+void test_remove_first_occurrence(void)
+{
+  List_ptr list = get_default_list(2, generate_even);
+  int *num = malloc(sizeof(int));
+  *num = 2;
+  add_to_list(list, num);
+  int *num_to_match = malloc(sizeof(int));
+  *num_to_match = 3;
+
+  Element removed = remove_first_occurrence(list, num_to_match, are_ints_equal);
+  assert_strict_equal("Should not remove non existing element", (removed == NULL), Success);
 }
 
 void test_remove_from_end(void)
@@ -105,7 +118,7 @@ void test_remove_from_start(void)
   int *removed = remove_from_start(list);
   assert_strict_equal("Should remove from the start of a non empty list", *removed, 0);
   assert_strict_equal("Should update the head of the list", *(int *)list->first->element, 1);
-  assert_strict_equal("Should updated the count of the list", list->length, 1);
+  assert_strict_equal("Should updated the length of the list", list->length, 1);
   free(removed);
 
   removed = remove_from_start(list);
@@ -288,6 +301,7 @@ int main(void)
   exec_test_suite("remove_from_start", test_remove_from_start);
   exec_test_suite("remove_at", test_remove_at);
   exec_test_suite("remove_from_end", test_remove_from_end);
+  exec_test_suite("remove_first_occurrence", test_remove_first_occurrence);
   exec_test_suite("add_unique", test_add_unique);
   exec_test_suite("clear_list", test_clear_list);
   print_report();
