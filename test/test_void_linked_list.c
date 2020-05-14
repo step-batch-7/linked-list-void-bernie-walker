@@ -49,17 +49,17 @@ void test_forEach(void)
 
 void test_reverse(void)
 {
-  List_ptr list1 = create_list();
-  List_ptr reversed1 = reverse(list1);
-  assert_strict_equal("should reverse an empty list", reversed1->length, 0);
-
-  List_ptr list2 = get_default_list(2, generate_int);
-  List_ptr reversed2 = reverse(list2);
-  Status is_reversed = ((reversed2->length == 2) && (*(int *)reversed2->first->element == 1) && (*(int *)reversed2->last->element == 0));
+  List_ptr list = get_default_list(2, generate_int);
+  List_ptr reversed1 = reverse(list);
+  Status is_reversed = ((reversed1->length == 2) && (*(int *)reversed1->first->element == 1) && (*(int *)reversed1->last->element == 0));
   assert_strict_equal("should reverse the given array", is_reversed, Success);
 
-  clear_list(reversed2);
-  List_ptr lists[] = {list1, list2, reversed1, reversed2};
+  clear_list(reversed1);
+
+  List_ptr reversed2 = reverse(reversed1);
+  assert_strict_equal("should reverse an empty list", reversed2->length, 0);
+
+  List_ptr lists[] = {list, reversed1, reversed2};
   destroy_multiple(3, lists, free);
 }
 
