@@ -39,6 +39,17 @@ void test_clear_list(void)
   destroy_list(list, free);
 }
 
+void test_remove_at(void)
+{
+  List_ptr list = get_default_list(3, generate_int);
+  assert_strict_equal("Should remove from middle of the list", *(int *)remove_at(list, 1), 1);
+  assert_strict_equal("Should update the length of the list", list->length, 2);
+  assert_strict_equal("Should remove from the end of the list", *(int *)remove_at(list, 1), 2);
+  assert_strict_equal("Should remove from starting of the list", *(int *)remove_at(list, 0), 0);
+  assert_strict_equal("Both head and last should be NULL after removal of an only element", is_list_empty(list), Success);
+  assert_strict_equal("Should not remove from the list when a wrong position is given", (remove_at(list, 2) == NULL), Success);
+}
+
 void test_remove_from_start(void)
 {
   List_ptr list = get_default_list(2, generate_int);
@@ -150,6 +161,7 @@ int main(void)
   exec_test_suite("reverse", test_reverse);
   exec_test_suite("forEach", test_forEach);
   exec_test_suite("remove_from_start", test_remove_from_start);
+  exec_test_suite("remove_at", test_remove_at);
   exec_test_suite("clear_list", test_clear_list);
   print_report();
   return 0;

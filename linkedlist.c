@@ -156,6 +156,35 @@ Element remove_from_start(List_ptr list)
   return removed_element;
 }
 
+Element remove_at(List_ptr list, int position)
+{
+  if (position == 0)
+  {
+    return remove_from_start(list);
+  }
+
+  Node_ptr node_before_position = get_nth_node(list, (position - 1));
+
+  if (node_before_position == NULL)
+  {
+    return NULL;
+  }
+
+  Node_ptr node_to_remove = node_before_position->next;
+  node_before_position->next = node_to_remove->next;
+  Element removed_element = node_to_remove->element;
+
+  free(node_to_remove);
+  --list->length;
+
+  if (list->length == position)
+  {
+    list->last = node_before_position;
+  }
+
+  return removed_element;
+}
+
 Status clear_list(List_ptr list)
 {
   Node_ptr walker = list->first;
