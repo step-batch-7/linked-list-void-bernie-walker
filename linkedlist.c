@@ -44,6 +44,26 @@ Status add_to_start(List_ptr list, Element element)
   return Success;
 }
 
+Status add_to_list(List_ptr list, Element element)
+{
+  if (list->first == NULL)
+  {
+    return add_to_start(list, element);
+  }
+
+  Node_ptr new_node = create_node(element);
+
+  if (new_node == NULL)
+  {
+    return Failure;
+  }
+
+  list->last->next = new_node;
+  list->last = new_node;
+  ++list->length;
+  return Success;
+}
+
 void destroy_list(List_ptr list, ElementProcessor element_destroyer)
 {
   Node_ptr walker = list->first;
