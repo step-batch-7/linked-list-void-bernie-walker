@@ -61,7 +61,7 @@ Status are_ints_equal(Element int1, Element int2)
   return *(int *)int1 == *(int *)int2;
 }
 
-Element add_two_elements(Element int1, Element int2)
+Element add_two_ints(Element int1, Element int2)
 {
   *(int *)int1 = *(int *)int1 + *(int *)int2;
   return int1;

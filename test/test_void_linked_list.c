@@ -105,6 +105,20 @@ void test_forEach(void)
   assert_strict_equal("should square the elements of the array", are_lists_equal(actual, expected, are_ints_equal), Success);
 }
 
+void test_reduce(void)
+{
+  List_ptr list = get_default_list(4, generate_int);
+  Element init = calloc(1, sizeof(int));
+  assert_strict_equal("should get the total of elements in the list", *(int *)reduce(list, init, add_two_ints), 6);
+
+  forEach(list, free);
+  clear_list(list);
+  *(int *)init = 9;
+  assert_strict_equal("should return the initial value for an empty list", *(int *)reduce(list, init, add_two_ints), 9);
+
+  destroy_list(list, free);
+}
+
 void test_filter(void)
 {
   List_ptr list = get_default_list(5, generate_int);
@@ -225,6 +239,7 @@ int main(void)
   exec_test_suite("reverse", test_reverse);
   exec_test_suite("map", test_map);
   exec_test_suite("filter", test_filter);
+  exec_test_suite("reduce", test_reduce);
   exec_test_suite("forEach", test_forEach);
   exec_test_suite("remove_from_start", test_remove_from_start);
   exec_test_suite("remove_at", test_remove_at);

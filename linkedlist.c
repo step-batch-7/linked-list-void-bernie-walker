@@ -155,6 +155,19 @@ List_ptr filter(List_ptr list, Predicate predicate)
   return result;
 }
 
+Element reduce(List_ptr list, Element init, Reducer reducer)
+{
+  Node_ptr walker = list->first;
+
+  while (walker != NULL)
+  {
+    init = reducer(init, walker->element);
+    walker = walker->next;
+  }
+
+  return init;
+}
+
 void forEach(List_ptr list, ElementProcessor process_element)
 {
   Node_ptr walker = list->first;
