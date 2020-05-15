@@ -283,6 +283,42 @@ Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
   return removed_element;
 }
 
+List_ptr remove_all_occurrences(List_ptr list, Element element, Matcher matcher)
+{
+  List_ptr removed = create_list();
+  Node_ptr previous = NULL, walker = list->first;
+
+  while (walker != NULL)
+  {
+    if (!matcher(element, walker->element))
+    {
+      previous = walker;
+      walker = walker->next;
+      continue;
+    }
+
+    if (previous == NULL)
+    {
+      walker = walker->next;
+      add_to_list(removed, remove_from_start(list));
+      continue;
+    }
+
+    if (walker->next == NULL)
+    {
+      list->last = previous;
+    }
+
+    previous->next = walker->next;
+    add_to_list(removed, walker->element);
+    free(walker);
+    --list->length;
+    walker = previous->next;
+  }
+
+  return removed;
+}
+
 Status add_unique(List_ptr list, Element element, Matcher matcher)
 {
   Pair_ptr pair = find_element(list, element, matcher);

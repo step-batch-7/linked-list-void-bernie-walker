@@ -58,9 +58,36 @@ void test_add_unique(void)
   destroy_list(list, free);
 }
 
-void disp(Element el)
+void test_remove_all_occurrences(void)
 {
-  printf("%d  ", *(int *)el);
+  List_ptr list = get_default_list(3, generate_int);
+  int *num1 = calloc(1, sizeof(int));
+  int *num2 = calloc(1, sizeof(int));
+  insert_at(list, num1, 2);
+  add_to_list(list, num2);
+
+  int *num_to_remove = malloc(sizeof(int));
+  *num_to_remove = 9;
+
+  List_ptr empty_list = remove_all_occurrences(list, num_to_remove, are_ints_equal);
+  assert_strict_equal("Should not remove non existing element from the list", is_list_empty(empty_list), Success);
+
+  *num_to_remove = 0;
+  List_ptr list_of_0 = remove_all_occurrences(list, num_to_remove, are_ints_equal);
+  List_ptr expected1 = get_default_list(3, generate_0);
+  assert_strict_equal("Should remove all the occurrences of an existing element", are_lists_equal(list_of_0, expected1, are_ints_equal), Success);
+  assert_strict_equal("Should update the head of the list when the first element is removed", *(int *)list->first->element, 1);
+  assert_strict_equal("Should update the last of the list when the last element is removed", *(int *)list->last->element, 2);
+
+  *num_to_remove = 1;
+  List_ptr removed1 = remove_all_occurrences(list, num_to_remove, are_ints_equal);
+  *num_to_remove = 2;
+  List_ptr removed2 = remove_all_occurrences(list, num_to_remove, are_ints_equal);
+  assert_strict_equal("Both head and last should be NULL after removal of an only element", is_list_empty(list), 1);
+
+  free(num_to_remove);
+  List_ptr lists[6] = {list, empty_list, list_of_0, expected1, removed1, removed2};
+  destroy_multiple(6, lists, free);
 }
 
 void test_remove_first_occurrence(void)
@@ -333,6 +360,7 @@ int main(void)
   exec_test_suite("remove_at", test_remove_at);
   exec_test_suite("remove_from_end", test_remove_from_end);
   exec_test_suite("remove_first_occurrence", test_remove_first_occurrence);
+  exec_test_suite("remove_all_occurrences", test_remove_all_occurrences);
   exec_test_suite("add_unique", test_add_unique);
   exec_test_suite("clear_list", test_clear_list);
   print_report();
