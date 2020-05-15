@@ -5,6 +5,8 @@
 
 typedef Element (*Genearator)(int);
 
+Element generate_0(int);
+
 Element generate_even(int);
 
 Element generate_int(int);

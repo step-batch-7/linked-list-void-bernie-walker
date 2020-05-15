@@ -1,5 +1,11 @@
 #include "aider.h"
 
+Element generate_0(int value)
+{
+  Element int_value = calloc(1, sizeof(int));
+  return int_value;
+}
+
 Element generate_even(int value)
 {
   int *even = malloc(sizeof(int));
