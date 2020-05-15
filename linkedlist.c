@@ -264,7 +264,23 @@ Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
     return NULL;
   }
 
-  return NULL;
+  if (pair->previous == NULL)
+  {
+    free(pair);
+    return remove_from_start(list);
+  }
+
+  if (pair->current->next == NULL)
+  {
+    list->last = pair->previous;
+  }
+
+  Element removed_element = pair->current->element;
+  pair->previous->next = pair->current->next;
+  free(pair->current);
+  --list->length;
+
+  return removed_element;
 }
 
 Status add_unique(List_ptr list, Element element, Matcher matcher)

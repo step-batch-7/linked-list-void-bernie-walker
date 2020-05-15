@@ -58,17 +58,48 @@ void test_add_unique(void)
   destroy_list(list, free);
 }
 
+void disp(Element el)
+{
+  printf("%d  ", *(int *)el);
+}
+
 void test_remove_first_occurrence(void)
 {
-  List_ptr list = get_default_list(2, generate_even);
+  List_ptr list = get_default_list(3, generate_int);
   int *num = malloc(sizeof(int));
-  *num = 2;
+  *num = 0;
   add_to_list(list, num);
   int *num_to_match = malloc(sizeof(int));
   *num_to_match = 3;
 
   Element removed = remove_first_occurrence(list, num_to_match, are_ints_equal);
   assert_strict_equal("Should not remove non existing element", (removed == NULL), Success);
+
+  *num_to_match = 0;
+  removed = remove_first_occurrence(list, num_to_match, are_ints_equal);
+  assert_strict_equal("should remove the first occurrence of the existing element", *(int *)removed, 0);
+  assert_strict_equal("Should remove only the first occurrence", *(int *)list->last->element, 0);
+  assert_strict_equal("Should update the first when removed element was first element", *(int *)list->first->element, 1);
+  free(removed);
+
+  *num_to_match = 2;
+  removed = remove_first_occurrence(list, num_to_match, are_ints_equal);
+  assert_strict_equal("should remove the element from middle of the list", *(int *)removed, 2);
+  assert_strict_equal("should update the length of the list", list->length, 2);
+  free(removed);
+
+  *num_to_match = 0;
+  removed = remove_first_occurrence(list, num_to_match, are_ints_equal);
+  assert_strict_equal("should update the last when removed element was last element", *(int *)list->last->element, 1);
+  free(removed);
+
+  *num_to_match = 1;
+  removed = remove_first_occurrence(list, num_to_match, are_ints_equal);
+  assert_strict_equal("Both head and last should be NULL after removal of an only element", is_list_empty(list), 1);
+  free(removed);
+
+  free(num_to_match);
+  free(list);
 }
 
 void test_remove_from_end(void)
